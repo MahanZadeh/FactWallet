@@ -1,6 +1,14 @@
 import React, {PureComponent} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+
+import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
+
 class Joke extends PureComponent {
     constructor(props) {
         super(props);
@@ -11,6 +19,7 @@ class Joke extends PureComponent {
           next: false,
         };
       }
+      
     
       componentDidMount() {
         
@@ -43,13 +52,47 @@ class Joke extends PureComponent {
           )
       }
 
-      handleClick = () => {
+      writeToFirebase = async(e) => {
+        // const { uid, photoUrl } = auth.currentUser;
+        // await factRef
+        db.collection("savedFacts").add({
+          date: new Date,
+          fact: this.state.items,
+        })
+      }
+
+      handleClick = (e) => {
         //   this.setState({next:true});
           console.log("click")
-          this.componentDidMount()
+          db.collection("savedFacts").add({
+            date: new Date,
+            fact: this.state.items,
+          }).then((docRef) => {
+            alert("Data Successfully Submitted");
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    
+          this.componentDidMount();
+
       }
+
+
+
+
     
       render() {
+        const mystyle = {
+          color: "white",
+          backgroundColor: "DodgerBlue",
+          padding: "10px",
+          fontFamily: "Arial"
+        };
+        const button = {
+          backgroundColor: "red",
+          padding: "15px",
+        };
         const { error, isLoaded, items } = this.state;
         if (error) {
           return <div>Error: {error.message}</div>;
@@ -57,9 +100,9 @@ class Joke extends PureComponent {
           return <div>Loading...</div>;
         } else {
           return (
-            <ul>
+            <ul style={mystyle}>
                 <li>{items}</li>
-                <Button onClick={this.handleClick}></Button>
+                <Button style={button} onClick={this.handleClick}></Button>
             </ul>
           );
         }

@@ -9,42 +9,32 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { auth, signInWithEmailAndPassword, signInWithGoogle } from "./firebase/firebase";
 
-import Joke from "./components/fact";
+import Joke from "./components/joke";
 
 import Login from "./components/login";
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyDHj6bckLNKC9QM561wyPnWVoyC5M0EZVs",
-//   authDomain: "factswallet-bbf90.firebaseapp.com",
-//   projectId: "factswallet-bbf90",
-//   storageBucket: "factswallet-bbf90.appspot.com",
-//   messagingSenderId: "592394552215",
-//   appId: "1:592394552215:web:529dd4e38d0ae51259bad2",
-//   measurementId: "G-37PF0YTJ12"})
-
-// const auth = firebase.auth();
-// const firestore = firebase.firestore();
 
 
 
-// function SignIn() {
 
-//   const signInWithGoogle = () => {
-//       const provider = new firebase.auth.GoogleAuthProvider();
-//       auth.signInWithPopup(provider);
-//   }
+function SignIn() {
+
+  const signInWithGoogle = () => {
+      const provider = new auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider);
+  }
 
 
-//   return (
-//       <button onClick={signInWithGoogle}>Sign In With Google</button>
-//   )
-// }
+  return (
+      <button onClick={signInWithGoogle}>Sign In With Google</button>
+  )
+}
 
-// function SignOut() {
-//   return auth.currentUser && (
-//     <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-//   )
-// }
+function SignOut() {
+  return auth.currentUser && (
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
 
 function SingleFact(props){
   const { text, uid } = props.fact;
@@ -74,6 +64,7 @@ function SingleFact(props){
 function App() {
   
   const [user] = useAuthState(auth);
+  console.log(user)
 
   return (
     <div className="App">
@@ -82,8 +73,8 @@ function App() {
       </header> */}
       <section>
         <h1>HIIII</h1>
-        <Joke />
-        <Login />
+        <SignOut/>
+        {user ? <Joke/> : <Login/>}
       </section>
     </div>
   );
