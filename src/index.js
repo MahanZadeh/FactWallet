@@ -45,9 +45,10 @@ import App from './App';
 import Login from './components/login';
 import Fact from './components/facts';
 import Profile from './components/profile';
+import UpdateProfile from './components/updateProfile';
 
 
-ReactDOM.render(
+ReactDOM.render( 
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={Login} >
@@ -57,6 +58,8 @@ ReactDOM.render(
           <Route exact path="/fact" component={Fact}>
           </Route>
           <Route exact path="/profile" component={Profile}>
+          </Route>
+          <Route exact path="/updateProfile" component={UpdateProfile}>
           </Route>
         </Switch>
       </BrowserRouter>,

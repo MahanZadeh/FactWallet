@@ -13,6 +13,8 @@ import Navigation from './navigation';
 import mahan from './mahan.PNG';
 import buffer from './buffer.gif';
 
+import UpdateProfile from './updateProfile';
+
 
 import { onAuthStateChanged } from '@firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -30,8 +32,20 @@ class Profile extends PureComponent {
             name: "",
             email: "",
             pic: "",
+            address: "",
+            ShowpdateProfile: false,
         };
+        this.hideComponent = this.hideComponent.bind(this);
+
     }
+
+    hideComponent(name) {
+        console.log(name);
+        switch (name) {
+          case "ShowpdateProfile":
+            this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
+        }
+      }
 
     populateUser = () => {
         onAuthStateChanged(auth, (somebody) => {
@@ -47,7 +61,8 @@ class Profile extends PureComponent {
                         this.setState({
                             name: somebody.displayName,
                             email: somebody.email,
-                            pic: somebody.photoURL
+                            pic: somebody.photoURL,
+                            address: somebody.address,
                         })
                     }).catch(function (error) {
                         console.log(error)
@@ -61,7 +76,15 @@ class Profile extends PureComponent {
         this.populateUser()
     }
 
+    renderUpdate = (e) => {
+        e.preventDefault();
+        this.props.renderUpdate();
+    }
+
     render() {
+
+        const ShowpdateProfile = this.state.ShowpdateProfile;
+
         const bufferImage = {
             position: "absolute",
             top: "50%",
@@ -94,7 +117,7 @@ class Profile extends PureComponent {
                 <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
                     <Card.Header>
                         <div id="profilPic" style={{position: 'relative', border:'2px red solid'}}>
-                            <img src={this.state.pic} width="110vw" height="110vh" style={{borderRadius: "50%", border: "2px red solid"}}>
+                            <img src={this.state.pic} width="80vw" height="80vh" style={{borderRadius: "50%", border: "2px red solid"}}>
                             </img>
                             <p style={{ display: 'inline', color: 'navy', position: 'absolute', bottom: '0', left:'110px', fontSize:'3.4vh', border:'2px red solid' }}>{this.state.name}</p>
 
@@ -106,11 +129,22 @@ class Profile extends PureComponent {
                             <p>
                             Email: {this.state.email}
                             </p>
+                            <p>
+                            Address: {this.state.address}
+                            </p>
 
                         </div>
                     
                     <Button variant="primary" type="submit">
+                    {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
                         Update Profile
+                        </Link> */}
+                        <Link onClick={() => this.hideComponent("ShowpdateProfile")}to="#" className="nav-link">
+                        </Link>
+                        <div>
+                         <UpdateProfile showSignUp={this.state.ShowpdateProfile}/>
+                        </div>
+
                     </Button>
                        </Card.Text>
                     </Card.Body>
@@ -144,3 +178,48 @@ export default Profile;
 //   // An error occurred
 //   // ...
 // });
+
+
+
+
+// /**
+//  * Upload user profile image to Cloud Firestore.//////////////////////////////////////////////////
+//  * 
+//  * @param {string} userUid A string representing a corresponding firebase collection identification number (or a user)
+//  * @returns if an error occurs, function returns an error message of 'not logged in' 
+//  */
+//  function uploadUserProfilePic(userUid) {
+
+//     // Let's assume my storage is only enabled for authenticated users 
+//     // This is set in your firebase console storage "rules" tab
+//     if (!userUid) { console.err("Not logged in!"); return };
+
+//     const fileInput = document.getElementById("profile-pic");
+
+//     // listen for file selection
+//     fileInput.addEventListener('change', function (e) {
+
+//         var file = e.target.files[0];
+
+//         //store using this name
+//         var storageRef = storage.ref("images/" + userUid + ".jpg");
+
+//         //upload the picked file
+//         storageRef.put(file)
+//             .then(function () {
+//                 console.log('Uploaded to Cloud Storage.');
+//             })
+
+//         //get the URL of stored file
+//         storageRef.getDownloadURL()
+//             .then(function (url) {   // Get URL of the uploaded file
+//                 console.log(url);    // Save the URL into users collection
+//                 db.collection("users").doc(userUid).update({
+//                     "profilePicture": url
+//                 })
+//                     .then(function () {
+//                         console.log('Added Profile Pic URL to Firestore.');
+//                     })
+//             })
+//     })
+// }
