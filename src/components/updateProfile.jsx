@@ -4,7 +4,7 @@ import { Modal, Button,Form } from 'react-bootstrap';
 
 class UpdateProfile extends PureComponent {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             firstName: '',
             lastName: '',

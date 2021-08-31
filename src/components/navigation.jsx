@@ -52,6 +52,12 @@ class Navigation extends PureComponent {
                              <Link to="#" className="nav-link">
                                 sign Up
                             </Link>
+                            <Link to="/fact" className="nav-link">
+                                Random facts!
+                            </Link>
+                            <Link to="/savedFacts" className="nav-link">
+                                My saved facts!
+                            </Link>
                             <Link onClick={this.renderLogin} to="#" className="nav-link">
                                 Login
                             </Link>

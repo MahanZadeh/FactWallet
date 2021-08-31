@@ -46,6 +46,7 @@ import Login from './components/login';
 import Fact from './components/facts';
 import Profile from './components/profile';
 import UpdateProfile from './components/updateProfile';
+import SavedFacts from './components/savedFacts';
 
 
 ReactDOM.render( 
@@ -60,6 +61,8 @@ ReactDOM.render(
           <Route exact path="/profile" component={Profile}>
           </Route>
           <Route exact path="/updateProfile" component={UpdateProfile}>
+          </Route>
+          <Route exact path="/savedFacts" component={SavedFacts}>
           </Route>
         </Switch>
       </BrowserRouter>,

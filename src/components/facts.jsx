@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Modal, Button, Form, Card } from 'react-bootstrap';
+import { Modal, Button, Form, Card, Nav } from 'react-bootstrap';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -22,21 +22,12 @@ class Fact extends PureComponent {
       isLoaded: false,
       items: [],
       next: false,
+      loggedIn: false,
     };
   }
 
 
   componentDidMount() {
-
-    // const requestOptions = {
-    //     method: 'GET',
-    //     headers: {
-    //         'accept': "application/json",
-    //         'x-rapidapi-host': "matchilling-chuck-norris-jokes-v1.p.rapidapi.com",
-    //         'x-rapidapi-key': "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649"
-    //         }};           
-    // fetch("https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random", requestOptions)
-
     fetch("https://facts-by-api-ninjas.p.rapidapi.com/v1/facts", {
       "method": "GET",
       "headers": {
@@ -64,8 +55,29 @@ class Fact extends PureComponent {
 
 
   handleClick = (e) => {
-    this.componentDidMount();
-  }
+    fetch("https://facts-by-api-ninjas.p.rapidapi.com/v1/facts", {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "facts-by-api-ninjas.p.rapidapi.com",
+        "x-rapidapi-key": "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649"
+      }
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result[0]["fact"]
+          });
+          console.log(result[0]["fact"])
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )  }
 
   saveFact = (e) => {
     onAuthStateChanged(auth, (user) => {
@@ -81,21 +93,56 @@ class Fact extends PureComponent {
       .catch((error) => {
         console.error("Error adding document: ", error);
       })
+    } else {
+      alert("You need to be signed in to perfom this operation!")
     }
   })
   }
+  
 
   render() {
     const mystyle = {
       color: "white",
       backgroundColor: "DodgerBlue",
       padding: "10px",
-      fontFamily: "Arial"
+      fontFamily: "Arial",
+      height: "100vh",
     };
     const button = {
       backgroundColor: "red",
       padding: "15px",
     };
+
+    const { error, isLoaded, items } = this.state;
+
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+      <>
+      <Navigation />
+        <div>
+          <Card onClick={this.handleClick} style={mystyle}>
+            <Card.Body>
+              <Card.Title style={{ color: 'navy' }}>Click for a random fun fact!</Card.Title>
+              {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
+              <Card.Text>
+                {items}
+              </Card.Text>
+              <Card.Link href="#" onClick={this.handleClick} style={{color: "black"}}>New Fact!</Card.Link>
+              <Card.Link href="#" onClick={this.saveFact} style={{color: "black"}}>Save it to your profile!</Card.Link>
+            </Card.Body>
+          </Card>        
+        </div>
+      </>
+      );
+    }
+  }
+}
+
+export default Fact;
 
     // const card = styled.a` 
     //   transition: "box-shadow .3s",
@@ -134,35 +181,7 @@ class Fact extends PureComponent {
   }
 `
     
-    const { error, isLoaded, items } = this.state;
 
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-      <>
-        <div>
-          <Card onClick={this.handleClick} style={mystyle}>
-            <Card.Body>
-              <Card.Title style={{ color: 'navy' }}>Click for a random fun fact!</Card.Title>
-              {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
-              <Card.Text>
-                {items}
-              </Card.Text>
-              <Card.Link href="#" onClick={this.handleClick} >New Fact!</Card.Link>
-              <Card.Link href="#" onClick={this.saveFact}>Save it to your profile!</Card.Link>
-            </Card.Body>
-          </Card>        
-        </div>
-      </>
-      );
-    }
-  }
-}
-
-export default Fact;
 
 
 {/* <ul style={mystyle}>
