@@ -43,7 +43,7 @@ class Profile extends PureComponent {
                     .doc(somebody.uid)
                     .get()
                     .then((result) => {
-                        console.log(result.name)
+                        console.log(somebody.email)
                         this.setState({
                             name: somebody.displayName,
                             email: somebody.email,
@@ -89,29 +89,28 @@ class Profile extends PureComponent {
 
             <>
                 <Navigation />
-                <button onClick={this.populateUser}>Name</button>
-                <p style={{ fontSize: "25px" }}>{this.state.name}</p>
-
-
-
-
+                {/* <button onClick={this.populateUser}>Name</button>
+                <p style={{ fontSize: "25px" }}>{this.state.name}</p> */}
                 <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
                     <Card.Header>
-                        <div id="profilPic">
-                            <img src={mahan} width="150" height="150px">
+                        <div id="profilPic" style={{position: 'relative', border:'2px red solid'}}>
+                            <img src={this.state.pic} width="110vw" height="110vh" style={{borderRadius: "50%", border: "2px red solid"}}>
                             </img>
-                            <p style={{ display: 'inline' }}>{this.state.name}</p>
-                            <p style={{ display: 'inline' }}>{this.state.email}</p>
-                            <img src={this.state.pic}></img>
+                            <p style={{ display: 'inline', color: 'navy', position: 'absolute', bottom: '0', left:'110px', fontSize:'3.4vh', border:'2px red solid' }}>{this.state.name}</p>
 
                         </div>
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title style={{color: 'black'}}>Name: {this.state.name}</Card.Title>
                         <Card.Text>
+                        <div id="userDetails">
+                            <p>
+                            Email: {this.state.email}
+                            </p>
+
+                        </div>
                     
                     <Button variant="primary" type="submit">
-                        Submit
+                        Update Profile
                     </Button>
                        </Card.Text>
                     </Card.Body>
@@ -132,3 +131,16 @@ class Profile extends PureComponent {
 
 }
 export default Profile;
+
+
+///Set a user's email address/////////////////////////////////////
+
+// import { getAuth, updateEmail } from "firebase/auth";
+// const auth = getAuth();
+// updateEmail(auth.currentUser, "user@example.com").then(() => {
+//   // Email updated!
+//   // ...
+// }).catch((error) => {
+//   // An error occurred
+//   // ...
+// });
