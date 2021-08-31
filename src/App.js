@@ -1,6 +1,5 @@
 import React from "react";
 import './App.css';
-// import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
@@ -9,26 +8,22 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { auth, signInWithEmailAndPassword, signInWithGoogle } from "./firebase/firebase";
 
-import Joke from "./components/joke";
+import Fact from "./components/facts";
 
 import Login from "./components/login";
 
-
-
-
+import Navigation from "./components/navigation";
 
 function SignIn() {
-
   const signInWithGoogle = () => {
-      const provider = new auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider);
+    const provider = new auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
   }
-
-
   return (
-      <button onClick={signInWithGoogle}>Sign In With Google</button>
+    <button onClick={signInWithGoogle}>Sign In With Google</button>
   )
 }
+
 
 function SignOut() {
   return auth.currentUser && (
@@ -36,16 +31,37 @@ function SignOut() {
   )
 }
 
-function SingleFact(props){
-  const { text, uid } = props.fact;
 
-  return <p>{text}</p>
+function App() {
+
+  const [user] = useAuthState(auth);
+  console.log(user)
+
+  return (
+    <div className="App">
+      <section>
+        <Navigation/>
+        {/* {user ? <Fact /> : <Login />} */}
+        <Fact/>
+        <SignOut />
+      </section>
+    </div>
+  );
 }
+
+export default App;
+
+
+// function SingleFact(props){
+//   const { text, uid } = props.fact;
+
+//   return <p>{text}</p>
+// }
 
 
 // function Facts() {
-//   const factRef = firestore.collection('facts');
-//   const query = factRef.orderBy('savedAt');
+//   const factRef = firestore.collection('savedFacts');
+//   const query = factRef.orderBy('date');
 //   const [facts] = useCollectionData(query, {idField: 'id'});
 
 //   return (
@@ -59,25 +75,3 @@ function SingleFact(props){
 //     </>
 //   )
 // }
-
-
-function App() {
-  
-  const [user] = useAuthState(auth);
-  console.log(user)
-
-  return (
-    <div className="App">
-      {/* <header className="App-header">
-
-      </header> */}
-      <section>
-        <h1>HIIII</h1>
-        <SignOut/>
-        {user ? <Joke/> : <Login/>}
-      </section>
-    </div>
-  );
-}
-
-export default App;

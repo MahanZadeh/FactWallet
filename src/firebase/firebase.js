@@ -7,15 +7,6 @@
 
 import firebase from 'firebase/compat/app';
 import firebaseConfig from './firebaseConfig';
-// const firebaseConfig = {
-//         apiKey: "AIzaSyDHj6bckLNKC9QM561wyPnWVoyC5M0EZVs",
-//         authDomain: "factswallet-bbf90.firebaseapp.com",
-//         projectId: "factswallet-bbf90",
-//         storageBucket: "factswallet-bbf90.appspot.com",
-//         messagingSenderId: "592394552215",
-//         appId: "1:592394552215:web:529dd4e38d0ae51259bad2",
-//         measurementId: "G-37PF0YTJ12"
-// };
 
 const app = firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
@@ -93,20 +84,6 @@ export {
         sendPasswordResetEmail,
         logout,
 };
-
-//  firebase.initializeApp(config);
-//  export default firebase;
-
-
-
-//  var firebaseConfig = {
-//         apiKey: "AIzaSyDHj6bckLNKC9QM561wyPnWVoyC5M0EZVs",
-//         authDomain: "factswallet-bbf90.firebaseapp.com",
-//         projectId: "factswallet-bbf90",
-//         storageBucket: "factswallet-bbf90.appspot.com",
-//         messagingSenderId: "592394552215",
-//         appId: "1:592394552215:web:529dd4e38d0ae51259bad2",
-//         measurementId: "G-37PF0YTJ12"};
 
 
 // /**
