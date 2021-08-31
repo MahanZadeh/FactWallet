@@ -22,6 +22,11 @@ class Navigation extends PureComponent {
     //     this.props.renderFactsPage;
     // }
 
+    renderLogin = (event) => {
+        event.preventDefault();
+        this.props.renderLogin();
+        }
+
     render() {
         return (
             <>
@@ -47,7 +52,7 @@ class Navigation extends PureComponent {
                              <Link to="#" className="nav-link">
                                 sign Up
                             </Link>
-                            <Link to="#" className="nav-link">
+                            <Link onClick={this.renderLogin} to="#" className="nav-link">
                                 Login
                             </Link>
                         </Nav>

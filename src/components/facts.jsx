@@ -53,9 +53,6 @@ class Fact extends PureComponent {
           });
           console.log(result[0]["fact"])
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           this.setState({
             isLoaded: true,
