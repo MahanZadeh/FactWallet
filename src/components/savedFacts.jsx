@@ -94,7 +94,7 @@ class SavedFacts extends PureComponent {
                 {facts.map((fact) => (
                     <div className="facys" key={facts.indexOf(fact)} style={{width: "100%", height: "10vh", textAlign:"center", marginBottom: "10px"}}>
                         {fact}
-                        <button onClick={} >Delete</button>
+                        {/* <button onClick={} >Delete</button> */}
                     </div>
                     
 

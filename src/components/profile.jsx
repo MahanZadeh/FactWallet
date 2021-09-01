@@ -6,6 +6,7 @@ import {
     Card,
     Form,
     Button,
+    NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Navigation from './navigation';
@@ -42,10 +43,10 @@ class Profile extends PureComponent {
     hideComponent(name) {
         console.log(name);
         switch (name) {
-          case "ShowpdateProfile":
-            this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
+            case "ShowpdateProfile":
+                this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
         }
-      }
+    }
 
     populateUser = () => {
         onAuthStateChanged(auth, (somebody) => {
@@ -72,7 +73,7 @@ class Profile extends PureComponent {
         })
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.populateUser()
     }
 
@@ -108,58 +109,57 @@ class Profile extends PureComponent {
 
         if (this.state.name != "") {
 
-        return (
+            return (
 
-            <>
-                <Navigation />
-                {/* <button onClick={this.populateUser}>Name</button>
-                <p style={{ fontSize: "25px" }}>{this.state.name}</p> */}
-                <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
-                    <Card.Header>
-                        <div id="profilPic" style={{position: 'relative', border:'2px red solid'}}>
-                            <img src={this.state.pic} width="80vw" height="80vh" style={{borderRadius: "50%", border: "2px red solid"}}>
-                            </img>
-                            <p style={{ display: 'inline', color: 'navy', position: 'absolute', bottom: '0', left:'110px', fontSize:'3.4vh', border:'2px red solid' }}>{this.state.name}</p>
+                <>
+                    <Navigation />
+                    <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
+                        <Card.Header>
+                            <div id="profilPic" style={{ position: 'relative', }}>
+                                <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", border: "2px red solid" }}>
+                                </img>
+                                <p style={{ display: 'inline', color: 'navy', position: 'absolute', bottom: '0', left: '110px', fontSize: '3vh', }}>{this.state.name}</p>
 
-                        </div>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text>
-                        <div id="userDetails">
-                            <p>
-                            Email: {this.state.email}
-                            </p>
-                            <p>
-                            Address: {this.state.address}
-                            </p>
+                            </div>
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                <div id="userDetails">
+                                    <p>
+                                        Email: {this.state.email}
+                                    </p>
+                                    <p>
+                                        Address: {this.state.address}
+                                    </p>
 
-                        </div>
-                    
-                    <Button variant="primary" type="submit">
-                    {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
+                                </div>
+
+                                <Button variant="primary" type="submit">
+                                    {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
                         Update Profile
                         </Link> */}
-                        <Link onClick={() => this.hideComponent("ShowpdateProfile")}to="#" className="nav-link">
-                        </Link>
-                        <div>
-                         <UpdateProfile showSignUp={this.state.ShowpdateProfile}/>
-                        </div>
+                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link">
+                                    </Link>
+                                    <div>
+                                        <UpdateProfile showSignUp={this.state.ShowpdateProfile} />
+                                    </div>
 
-                    </Button>
-                       </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-            </>
+                                </Button>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <br />
+                </>
 
-        )} else {
+            )
+        } else {
             return (
                 <>
                     <div style={bufferDiv}>
                         <img src={buffer} style={bufferImage}></img>
                     </div>
                 </>
-            )   
+            )
         }
     }
 

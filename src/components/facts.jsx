@@ -84,7 +84,6 @@ class Fact extends PureComponent {
       if (user) {
         console.log(user.uid)
     db.collection("savedFacts").add({
-      date: new Date,
       fact: this.state.items,
       uid: user.uid,
     }).then((docRef) => {
@@ -93,7 +92,10 @@ class Fact extends PureComponent {
       .catch((error) => {
         console.error("Error adding document: ", error);
       })
-    } else {
+    } 
+    
+    
+    else {
       alert("You need to be signed in to perfom this operation!")
     }
   })

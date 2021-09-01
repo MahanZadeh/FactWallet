@@ -14,9 +14,9 @@ class UpdateProfile extends PureComponent {
         }
     }
 
-    hideSignUp = (e) => {
-        this.props.showSignUp();
-    }
+    // hideSignUp = (e) => {
+    //     this.props.showSignUp();
+    // }
 
     updateFirstName = (e) => {
         this.setState({

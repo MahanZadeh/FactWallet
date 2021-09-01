@@ -40,7 +40,6 @@ function App() {
   return (
     <div className="App">
       <section>
-        <Navigation/>
         {/* {user ? <Fact /> : <Login />} */}
         <Fact/>
         <SignOut />
