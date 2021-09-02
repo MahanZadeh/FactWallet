@@ -14,9 +14,9 @@ class UpdateProfile extends PureComponent {
         }
     }
 
-    // hideSignUp = (e) => {
-    //     this.props.showSignUp();
-    // }
+    hideSignUp = (e) => {
+        this.props.showSignUp();
+    }
 
     updateFirstName = (e) => {
         this.setState({
@@ -49,26 +49,26 @@ class UpdateProfile extends PureComponent {
     }
 
 
-    signUpNow = (e) => {
-        e.preventDefault();
-        const {firstName, lastName, email, password, passswordConfirmation} = this.state
-        this.props.createUser(firstName, lastName, email, password, passswordConfirmation);
-    }
+    // signUpNow = (e) => {
+    //     e.preventDefault();
+    //     const {firstName, lastName, email, password, passswordConfirmation} = this.state
+    //     this.props.createUser(firstName, lastName, email, password, passswordConfirmation);
+    // }
 
     
 
 
     render(){
-        const showSignUp = this.props;
-        console.log(showSignUp["showSignUp"])
+        const showSignUp = this.props.showSignUp;
+        console.log(showSignUp)
 
         return(
             <>
             {showSignUp &&
             <Modal
                 size="md"
-                show={showSignUp["showSignUp"]}
-                onHide={this.hideSignUp}
+                show={showSignUp}
+                onHide={this.props.hideComponent}
                 aria-labelledby="example-modal-sizes-title-md"
             >
                 <Modal.Header closeButton>
@@ -112,8 +112,8 @@ class UpdateProfile extends PureComponent {
                     
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.hideSignUp} variant="secondary">Close</Button>
-                    <Button onClick={this.signUpNow} variant="primary">Sign Up!!</Button>
+                    <Button onClick={this.props.showSignUp} variant="secondary">Close</Button>
+                    {/* <Button onClick={this.signUpNow} variant="primary">Sign Up!!</Button> */}
                 </Modal.Footer>
             </Modal>
     }</>

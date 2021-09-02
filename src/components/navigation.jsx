@@ -31,7 +31,7 @@ class Navigation extends PureComponent {
     render() {
         return (
             <>
-                <Navbar bg="dark" variant="dark" expand="lg" style={{ position: 'sticky', position: '-webkit-sticky', top: '0' }}>
+                <Navbar bg="dark" variant="dark" expand="lg" style={{ position: 'sticky', position: '-webkit-sticky', top: '0',}}>
                     <Container>
                         <Navbar.Brand href="#home">
                             <img

@@ -40,12 +40,17 @@ class Profile extends PureComponent {
 
     }
 
-    hideComponent(name) {
-        console.log(name);
-        switch (name) {
-            case "ShowpdateProfile":
-                this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
-        }
+    // hideComponent(name) {
+    //     console.log(name);
+    //     switch (name) {
+    //         case "ShowpdateProfile":
+    //             this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
+    //     }
+    // }
+
+    hideComponent = () => {
+        this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
+        
     }
 
     populateUser = () => {
@@ -138,10 +143,11 @@ class Profile extends PureComponent {
                                     {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
                         Update Profile
                         </Link> */}
-                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link">
+                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{color: "black"}}>
+                                        Update Profile
                                     </Link>
                                     <div>
-                                        <UpdateProfile showSignUp={this.state.ShowpdateProfile} />
+                                        <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} />
                                     </div>
 
                                 </Button>
