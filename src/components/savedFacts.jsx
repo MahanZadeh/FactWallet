@@ -6,12 +6,14 @@ import 'firebase/compat/firestore';
 import { onAuthStateChanged } from '@firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
 
 import Navigation from './navigation';
 
 import { collection, query, where } from "firebase/firestore";
+import Fact from './facts';
 
 
 
@@ -33,14 +35,15 @@ class SavedFacts extends PureComponent {
                     .get()
                     .then(function (snapshot) {
                         snapshot.forEach(function (doc) {
-                            console.log(doc.data())
                             allFacts.push(doc.data().fact)
                         })
-                        return  allFacts;
-                    }).then((data) =>{
+                        return allFacts;
+                    }).then((data) => {
                         this.setState({
                             facts: data,
                         })
+                        console.log(allFacts);
+                        console.log(this.state.facts)
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -50,25 +53,19 @@ class SavedFacts extends PureComponent {
         })
     }
 
-        //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
+    //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
     deleteFact = () => {
         onAuthStateChanged(auth, (user) => {
-            let allFacts = [];
             if (user) {
-                db.collection("savedFacts")
-                    .where("uid", "==", user.uid)
-                    .get()
-                    .then(function (snapshot) {
-                        snapshot.forEach(function (doc) {
-                            console.log(doc.data())
-                            allFacts.push(doc.data().fact)
-                        })
-                        return  allFacts;
-                    }).then((data) =>{
-                        this.setState({
-                            facts: data,
-                        })
-                    })
+                console.log(user.uid)
+            db.collection("savedFacts").doc(user.uid).set({
+              fact: this.state.facts[0],
+              uid: user.uid,
+            }, { merge: true })
+            .then((docRef) => {
+              alert("Data Successfully Deleted");
+              console.log(this.state.facts[0])
+            })
                     .catch(function (error) {
                         console.log(error)
                     })
@@ -76,37 +73,33 @@ class SavedFacts extends PureComponent {
             }
         })
     }
-    
+
 
     render() {
-        const facts = this.state.facts
-        console.log(facts)
-        console.log(facts.length >= 0)
+        const facts = this.state.facts;
+        const deleteText = "";
+        console.log(facts, "here")
         if (this.state.facts.length != "0") {
-        return (
-            <>
-                <Navigation />
-                {/* <div className="facts">
-                    {facts.map((fact) => (
-                        <div className="fact">{fact}</div>
+            return (
+                <>
+                    <Navigation />
+                    {facts[0].map((fact) => (
+                        
+                        <>
+                        {console.log(fact)}
+                            <div className="facts" key={facts.indexOf(fact)} style={{ width: "100%", display: "inline-block", textAlign: "center", marginBottom: "10px", boxShadow: "10px 5px 5px #3A4750",}}>
+                                {fact}
+                                <button onClick={this.deleteFact}>Delete</button>
+
+                            </div>
+                        </>
                     ))}
-                </div> */}
-                {facts.map((fact) => (
-                    <div className="facys" key={facts.indexOf(fact)} style={{width: "100%", height: "10vh", textAlign:"center", marginBottom: "10px"}}>
-                        {fact}
-                        {/* <button onClick={} >Delete</button> */}
-                    </div>
-                    
-
-                ))}
-                
-
-                <button onClick={this.grabFacts}></button>
-            </>
-        )
-    } else {
-        return (<div>Loading...</div>)
+                </>
+            )
+        } else {
+            return (<div>Loading...</div>)
+        }
     }
-}}
+}
 
 export default SavedFacts;

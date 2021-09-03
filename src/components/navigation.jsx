@@ -8,6 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import logo192 from './logo192.png';
+import fw from './apple-touch-icon.png'
 
 import { logout } from '../firebase/firebase';
 
@@ -40,12 +41,12 @@ class Navigation extends PureComponent {
                         <Navbar.Brand href="#home">
                             <img
                                 alt=""
-                                src={logo192}
+                                src={fw}
                                 width="30"
                                 height="30"
                                 className="d-inline-block align-top"
                             />{' '}
-                            React Bootstrap
+                            Fact Wallet
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">

@@ -120,19 +120,18 @@ class Profile extends PureComponent {
         }
 
         if (this.state.name != "") {
-
             return (
 
                 <>
                     <Navigation />
-                    <button onClick={this.hideComponent}></button>
-                    {this.state.test ? <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} /> : <p>Bye</p>}
-                    <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
+                    {/* <button onClick={this.hideComponent}></button>
+                    {this.state.test ? <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} /> : <p>Bye</p>} */}
+                    <Card text="white" style={{ width: '100%', height: '100vh', backgroundColor:"#8A9EAB"}}>
                         <Card.Header>
                             <div id="profilPic" style={{ position: 'relative', }}>
-                                <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", border: "2px red solid" }}>
+                                <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", }}>
                                 </img>
-                                <p style={{ display: 'inline', color: 'navy', position: 'absolute', bottom: '0', left: '110px', fontSize: '3vh', }}>{this.state.name}</p>
+                                <p style={{ display: 'inline', color: '#2C353C', position: 'absolute', bottom: '0', left: '110px', fontSize: '3vh', }}>{this.state.name}</p>
 
                             </div>
                         </Card.Header>
@@ -148,18 +147,16 @@ class Profile extends PureComponent {
 
                                 </div>
 
-                                <Button variant="primary" type="submit">
                                     {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
                         Update Profile
                         </Link> */}
-                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{color: "black"}}>
+                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{color: "black", backgroundColor: "#576B77",}}>
                                         Update Profile
                                     </Link>
                                     <div>
                                         <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} />
                                     </div>
 
-                                </Button>
                             </Card.Text>
                         </Card.Body>
                     </Card>

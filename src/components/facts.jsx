@@ -8,6 +8,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+
 
 import Navigation from './navigation';
 
@@ -83,10 +85,11 @@ class Fact extends PureComponent {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user.uid)
-    db.collection("savedFacts").add({
-      fact: this.state.items,
+    db.collection("savedFacts").doc(user.uid).set({
+      fact: arrayUnion(this.state.items),
       uid: user.uid,
-    }).then((docRef) => {
+    }, { merge: true })
+    .then((docRef) => {
       alert("Data Successfully Submitted");
     })
       .catch((error) => {
@@ -105,10 +108,11 @@ class Fact extends PureComponent {
   render() {
     const mystyle = {
       color: "white",
-      backgroundColor: "DodgerBlue",
+      backgroundColor: "#8A9EAB",
       padding: "10px",
       fontFamily: "Arial",
       height: "100vh",
+      overflow: "hidden",
     };
     const button = {
       backgroundColor: "red",
@@ -126,15 +130,16 @@ class Fact extends PureComponent {
       <>
       <Navigation />
         <div>
-          <Card onClick={this.handleClick} style={mystyle}>
+          {/* <Card onClick={this.handleClick} style={mystyle}> */}
+          <Card style={mystyle}>
             <Card.Body>
-              <Card.Title style={{ color: 'navy' }}>Click for a random fun fact!</Card.Title>
+              <Card.Title style={{ color: '#1D2428' }}>Did you know?</Card.Title>
               {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
-              <Card.Text>
+              <Card.Text style={{fontSize: "3vh", color: "#1D2428"}}>
                 {items}
               </Card.Text>
-              <Card.Link href="#" onClick={this.handleClick} style={{color: "black"}}>New Fact!</Card.Link>
-              <Card.Link href="#" onClick={this.saveFact} style={{color: "black"}}>Save it to your profile!</Card.Link>
+              <Card.Link href="#" onClick={this.handleClick} style={{color: "#1D2428",}}>Click here for a New Fact!</Card.Link>
+              <Card.Link href="#" onClick={this.saveFact} style={{color: "#1D2428",}}>Save it to your profile!</Card.Link>
             </Card.Body>
           </Card>        
         </div>
