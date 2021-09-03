@@ -54,7 +54,7 @@ class UpdateProfile extends PureComponent {
         updateEmail(auth.currentUser, this.state.email).then(() => {
             console.log("email updated")
         }).catch((error) => {
-            alert(error)
+            console.log(error)
         });
     }
 
@@ -146,7 +146,7 @@ class UpdateProfile extends PureComponent {
 
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={() => { this.props.hideComponent(); this.updateDB(); this.props.rerender()}} variant="secondary">Submit</Button>
+                            <Button onClick={() => { this.props.hideComponent(); this.updateDB(); this.props.populateUser()}} variant="secondary">Submit</Button>
                             <Button onClick={this.props.hideComponent} variant="secondary">Cancel</Button>
                         </Modal.Footer>
                     </Modal>

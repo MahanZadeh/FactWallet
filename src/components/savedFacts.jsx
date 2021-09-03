@@ -14,6 +14,7 @@ import Navigation from './navigation';
 
 import { collection, query, where } from "firebase/firestore";
 import Fact from './facts';
+import buffer from './buffer.gif';
 
 
 
@@ -65,8 +66,9 @@ class SavedFacts extends PureComponent {
               uid: user.uid,
             }, { merge: true })
             .then((docRef) => {
-              alert("Data Successfully Deleted");
-              console.log(this.state.facts[0])
+            //   alert("Data Successfully Deleted");
+            //   console.log(this.state.facts[0])
+              console.log("Data Successfully Deleted")
             })
                     .catch(function (error) {
                         console.log(error)
@@ -106,6 +108,27 @@ class SavedFacts extends PureComponent {
 
 
     render() {
+        const bufferImage = {
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            margin: "0 auto",
+            zIndex: "100",
+        }
+      
+        const bufferDiv = {
+            position: "fixed",
+            display: "block",
+            width: "100vw",
+            height: "100vh",
+            top: "0",
+            left: "0",
+            textAlign: "center",
+            /* opacity: 0.7; */
+            backgroundColor: "#fff",
+            zIndex: "99",
+        }
+
         const facts = this.state.facts;
         const deleteText = "";
         console.log(facts, "here")
@@ -127,7 +150,11 @@ class SavedFacts extends PureComponent {
                 </>
             )
         } else {
-            return (<div>Loading...</div>)
+            return (
+                <div style={bufferDiv}>
+                  <img src={buffer} style={bufferImage}></img>
+                </div>
+              )
         }
     }
 }

@@ -15,6 +15,8 @@ import Navigation from './navigation';
 
 import styled from 'styled-components';
 
+import buffer from './buffer.gif';
+
 
 class Fact extends PureComponent {
   constructor(props) {
@@ -118,13 +120,38 @@ class Fact extends PureComponent {
       backgroundColor: "red",
       padding: "15px",
     };
+    
+    const bufferImage = {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      margin: "0 auto",
+      zIndex: "100",
+  }
+
+  const bufferDiv = {
+      position: "fixed",
+      display: "block",
+      width: "100vw",
+      height: "100vh",
+      top: "0",
+      left: "0",
+      textAlign: "center",
+      /* opacity: 0.7; */
+      backgroundColor: "#fff",
+      zIndex: "99",
+  }
 
     const { error, isLoaded, items } = this.state;
 
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <div style={bufferDiv}>
+          <img src={buffer} style={bufferImage}></img>
+        </div>
+      )
     } else {
       return (
       <>

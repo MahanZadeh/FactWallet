@@ -11,7 +11,6 @@ import {
 import { Link } from 'react-router-dom';
 import Navigation from './navigation';
 
-import mahan from './mahan.PNG';
 import buffer from './buffer.gif';
 
 import UpdateProfile from './updateProfile';
@@ -87,7 +86,6 @@ class Profile extends PureComponent {
                         })
                     }).catch(function (error) {
                         console.log(error)
-                        console.log("got error")
                     })
             }
         })
@@ -158,9 +156,8 @@ class Profile extends PureComponent {
         }
 
         if (user) {
+            if (this.state.email != ""){
             return (
-
-
                 <>
                     {/* <button onClick={this.populateUser}></button> */}
 
@@ -192,7 +189,7 @@ class Profile extends PureComponent {
                                     Update Profile
                                 </Link>
                                 <div>
-                                    <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} rerender={this.rerender} />
+                                    <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} populateUser={this.populateUser} />
                                 </div>
 
                             </Card.Text>
@@ -201,7 +198,13 @@ class Profile extends PureComponent {
                     <br />
                 </>
 
-            )
+            )} else {
+                return(
+                    <div style={bufferDiv}>
+                    <img src={buffer} style={bufferImage}></img>
+                </div>
+                )
+            }
         } else {
             return (
                 <>

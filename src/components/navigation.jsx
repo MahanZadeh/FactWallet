@@ -63,7 +63,7 @@ class Navigation extends PureComponent {
                                 <Link  to="/login" className="nav-link">
                                     Login
                                 </Link>
-                                <Link onClick={logout} to="/fact" className="nav-link">
+                                <Link onClick={() => {logout(); alert("You are logged out.")}} to="/fact" className="nav-link">
                                     Logout
                                 </Link>
                             </Nav>
