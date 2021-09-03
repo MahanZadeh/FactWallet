@@ -90,7 +90,7 @@ class Fact extends PureComponent {
       uid: user.uid,
     }, { merge: true })
     .then((docRef) => {
-      alert("Data Successfully Submitted");
+      console.log("Data Successfully Submitted");
     })
       .catch((error) => {
         console.error("Error adding document: ", error);

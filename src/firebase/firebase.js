@@ -84,6 +84,28 @@ const logout = () => {
 
 };
 
+const retrieveUserInfo = () => {
+        let userInfo = [];
+        console.log("userinfo fired")
+        if (user !== null) {
+                user.providerData.forEach((profile) => {
+                        userInfo.push(profile.providerId)
+                        userInfo.push(profile.uid)
+                        userInfo.push(profile.displayName)
+                        userInfo.push(profile.email)
+                        userInfo.push(profile.photoURL)
+
+                        console.log("Sign-in provider: " + profile.providerId);
+                        console.log("  Provider-specific UID: " + profile.uid);
+                        console.log("  Name: " + profile.displayName);
+                        console.log("  Email: " + profile.email);
+                        console.log("  Photo URL: " + profile.photoURL);
+                });
+        }
+        console.log(userInfo)
+        return userInfo;
+}
+
 export {
         auth,
         db,
@@ -92,6 +114,7 @@ export {
         registerWithEmailAndPassword,
         sendPasswordResetEmail,
         logout,
+        retrieveUserInfo,
 };
 
 

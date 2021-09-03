@@ -15,6 +15,7 @@ import mahan from './mahan.PNG';
 import buffer from './buffer.gif';
 
 import UpdateProfile from './updateProfile';
+import Login from './login';
 
 
 import { onAuthStateChanged } from '@firebase/auth';
@@ -36,6 +37,7 @@ class Profile extends PureComponent {
             address: "",
             ShowpdateProfile: false,
             test: false,
+            rerender: false,
         };
         this.hideComponent = this.hideComponent.bind(this);
 
@@ -49,9 +51,15 @@ class Profile extends PureComponent {
     //     }
     // }
 
+    rerender = () => {
+        this.setState({
+            rerender: !this.state.rerender
+        })
+    }
+
     hideComponent = () => {
         this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
-        
+
     }
 
     testToggle = () => {
@@ -65,6 +73,7 @@ class Profile extends PureComponent {
             if (somebody) {
                 console.log(somebody)
                 console.log(somebody.uid)
+                console.log(somebody.displayName)
 
                 db.collection("users")
                     .doc(somebody.uid)
@@ -75,7 +84,6 @@ class Profile extends PureComponent {
                             name: somebody.displayName,
                             email: somebody.email,
                             pic: somebody.photoURL,
-                            address: somebody.address,
                         })
                     }).catch(function (error) {
                         console.log(error)
@@ -94,7 +102,37 @@ class Profile extends PureComponent {
         this.props.renderUpdate();
     }
 
+
+    retrieveUserInfo = () => {
+        let userInfo = [];
+        let user = auth.currentUser;
+        console.log("userinfo fired")
+        if (user !== null) {
+            user.providerData.forEach((profile) => {
+                userInfo.push(profile.providerId)
+                userInfo.push(profile.uid)
+                userInfo.push(profile.displayName)
+                userInfo.push(profile.email)
+                userInfo.push(profile.photoURL)
+
+                console.log("Sign-in provider: " + profile.providerId);
+                console.log("  Provider-specific UID: " + profile.uid);
+                console.log("  Name: " + profile.displayName);
+                console.log("  Email: " + profile.email);
+                console.log("  Photo URL: " + profile.photoURL);
+            });
+        }
+        console.log(userInfo)
+        return userInfo;
+        // this.setState({
+
+        // })
+    }
+
     render() {
+
+        const user = auth.currentUser;
+
 
         const ShowpdateProfile = this.state.ShowpdateProfile;
 
@@ -119,14 +157,17 @@ class Profile extends PureComponent {
             zIndex: "99",
         }
 
-        if (this.state.name != "") {
+        if (user) {
             return (
 
+
                 <>
+                    {/* <button onClick={this.populateUser}></button> */}
+
                     <Navigation />
                     {/* <button onClick={this.hideComponent}></button>
                     {this.state.test ? <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} /> : <p>Bye</p>} */}
-                    <Card text="white" style={{ width: '100%', height: '100vh', backgroundColor:"#8A9EAB"}}>
+                    <Card text="white" style={{ width: '100%', height: '100vh', backgroundColor: "#8A9EAB" }}>
                         <Card.Header>
                             <div id="profilPic" style={{ position: 'relative', }}>
                                 <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", }}>
@@ -141,21 +182,18 @@ class Profile extends PureComponent {
                                     <p>
                                         Email: {this.state.email}
                                     </p>
-                                    <p>
-                                        Address: {this.state.address}
-                                    </p>
 
                                 </div>
 
-                                    {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
+                                {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
                         Update Profile
                         </Link> */}
-                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{color: "black", backgroundColor: "#576B77",}}>
-                                        Update Profile
-                                    </Link>
-                                    <div>
-                                        <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} />
-                                    </div>
+                                <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{ color: "black", backgroundColor: "#576B77", }}>
+                                    Update Profile
+                                </Link>
+                                <div>
+                                    <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} rerender={this.rerender} />
+                                </div>
 
                             </Card.Text>
                         </Card.Body>
@@ -167,9 +205,8 @@ class Profile extends PureComponent {
         } else {
             return (
                 <>
-                    <div style={bufferDiv}>
-                        <img src={buffer} style={bufferImage}></img>
-                    </div>
+                    <p style={{display:"block", textAlign:"center", fontSize:"3vh",}}>Login to view your profile</p>
+                    <Login/>
                 </>
             )
         }

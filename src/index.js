@@ -42,8 +42,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import Login from './components/login-og';
-import Login2 from './components/login'
+// import Login from './components/login-og';
+import Login from './components/login'
 import Fact from './components/facts';
 import Profile from './components/profile';
 import UpdateProfile from './components/updateProfile';
@@ -58,9 +58,9 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/app" component={App} >
           </Route>
-          <Route exact path="/" component={Login2} >
+          <Route exact path="/" component={Login} >
           </Route>
-          <Route exact path="/login" component={Login2} >
+          <Route exact path="/login" component={Login} >
           </Route>
           <Route exact path="/register" component={Register} />
           <Route exact path="/reset" component={Reset} />

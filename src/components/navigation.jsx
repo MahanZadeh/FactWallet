@@ -54,10 +54,6 @@ class Navigation extends PureComponent {
                                 <Link to="/profile" className="nav-link">
                                     Profile
                                 </Link>
-
-                                <Link to="#" className="nav-link">
-                                    sign Up
-                                </Link>
                                 <Link to="/fact" className="nav-link">
                                     Random facts!
                                 </Link>
@@ -67,7 +63,7 @@ class Navigation extends PureComponent {
                                 <Link  to="/login" className="nav-link">
                                     Login
                                 </Link>
-                                <Link onClick={logout} to="#" className="nav-link">
+                                <Link onClick={logout} to="/fact" className="nav-link">
                                     Logout
                                 </Link>
                             </Nav>

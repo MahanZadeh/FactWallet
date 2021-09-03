@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
-import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
+import { auth, signInWithEmailAndPassword, signInWithGoogle, db, } from "../firebase/firebase";
 
 import Navigation from './navigation';
 
@@ -22,6 +22,7 @@ class SavedFacts extends PureComponent {
         super(props);
         this.state = {
             facts: [],
+            uid: "",
         };
     }
 
@@ -41,6 +42,7 @@ class SavedFacts extends PureComponent {
                     }).then((data) => {
                         this.setState({
                             facts: data,
+                            uid: user.uid,
                         })
                         console.log(allFacts);
                         console.log(this.state.facts)
@@ -75,6 +77,34 @@ class SavedFacts extends PureComponent {
     }
 
 
+    getFacts = (e) => {
+        let allFacts = [];
+        console.log("clci")
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            console.log("user")
+
+            console.log(user.uid)
+        db.collection("savedFacts").doc(user.uid).get()
+        .then(function (doc) {
+            let test = doc.data();
+            console.log(test)
+            console.log("what")
+        })
+          .catch((error) => {
+            console.error("Error adding document: ", error);
+          })
+        } 
+    
+        else {
+            alert("You need to be signed in to perfom this operation!")
+          }
+        })
+        }
+
+
+
     render() {
         const facts = this.state.facts;
         const deleteText = "";
@@ -87,9 +117,9 @@ class SavedFacts extends PureComponent {
                         
                         <>
                         {console.log(fact)}
-                            <div className="facts" key={facts.indexOf(fact)} style={{ width: "100%", display: "inline-block", textAlign: "center", marginBottom: "10px", boxShadow: "10px 5px 5px #3A4750",}}>
+                            <div className="facts" key={facts.indexOf(fact)} style={{ width: "100%", display: "inline-block", textAlign: "center", marginBottom: "10px", boxShadow: "10px 5px 5px #3A4750", textAlign:"left"}}>
                                 {fact}
-                                <button onClick={this.deleteFact}>Delete</button>
+                                <button style={{float: "right", height: "3vh", width:"5vh", fontSize:"10px", backgroundColor:"#495964", marginRight:"1vw"}} onClick={this.deleteFact}>Delete</button>
 
                             </div>
                         </>
