@@ -71,8 +71,17 @@ const sendPasswordResetEmail = async (email) => {
         }
 };
 
+var user = firebase.auth().currentUser;
+
 const logout = () => {
+        if (user) {
+                alert("You are logged out!")
+        } else {
+                alert("You are already logged out!")
+        };
         auth.signOut();
+
+
 };
 
 export {

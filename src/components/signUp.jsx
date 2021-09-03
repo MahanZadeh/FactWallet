@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Modal, Button,Form } from 'react-bootstrap';
 
 
-class UpdateProfile extends PureComponent {
+class SignUp extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -11,6 +11,7 @@ class UpdateProfile extends PureComponent {
             email: '',
             password: '',
             passswordConfirmation: '',
+            showSignUp: true,
         }
     }
 
@@ -64,23 +65,23 @@ class UpdateProfile extends PureComponent {
 
         return(
             <>
-            {showSignUp &&
+
             <Modal
                 size="md"
-                show={showSignUp}
+                show={this.state.showSignUp}
                 onHide={this.props.hideComponent}
                 aria-labelledby="example-modal-sizes-title-md"
             >
                 <Modal.Header>
                     <Modal.Title id="example-modal-sizes-title-sm">
-                        Update Profile
+                        Sign Up
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control onChange={this.updateFirstName} type="text" placeholder="Enter your name" />
+                            <Form.Control onChange={this.updateFirstName} type="text" placeholder="First &amp; last name" />
                             <Form.Text className="text-muted">
                             </Form.Text>
                         </Form.Group>
@@ -115,10 +116,9 @@ class UpdateProfile extends PureComponent {
                     <Button onClick={this.props.hideComponent} variant="secondary">Submit</Button>
                     {/* <Button onClick={this.signUpNow} variant="primary">Sign Up!!</Button> */}
                 </Modal.Footer>
-            </Modal>
-    }</>
+            </Modal></>
         )
     }
 } 
 
-export default UpdateProfile;
+export default SignUp;

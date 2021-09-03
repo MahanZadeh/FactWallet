@@ -10,7 +10,7 @@ import { auth, signInWithEmailAndPassword, signInWithGoogle } from "./firebase/f
 
 import Fact from "./components/facts";
 
-import Login from "./components/login";
+import Login from "./components/login-og";
 
 import Navigation from "./components/navigation";
 
@@ -39,10 +39,12 @@ function App() {
 
   return (
     <div className="App">
+              <SignOut />
+
       <section>
+        <Navigation/>
         {/* {user ? <Fact /> : <Login />} */}
-        <Fact/>
-        <SignOut />
+        {/* <Fact/> */}
       </section>
     </div>
   );

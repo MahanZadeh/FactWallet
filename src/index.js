@@ -42,20 +42,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import Login from './components/login';
+import Login from './components/login-og';
+import Login2 from './components/login'
 import Fact from './components/facts';
 import Profile from './components/profile';
 import UpdateProfile from './components/updateProfile';
 import SavedFacts from './components/savedFacts';
-
+import signUp from './components/signUp';
+import Register from './components/register';
+import Reset from './components/reset';
+import Dashboard from './components/dashboard';
 
 ReactDOM.render( 
       <BrowserRouter>
         <Switch>
-          <Route exact path="/login" component={Login} >
+          <Route exact path="/app" component={App} >
           </Route>
-          <Route exact path="/" component={App} >
+          <Route exact path="/" component={Login2} >
           </Route>
+          <Route exact path="/login" component={Login2} >
+          </Route>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/reset" component={Reset} />
+          <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/fact" component={Fact}>
           </Route>
           <Route exact path="/profile" component={Profile}>
@@ -63,6 +72,8 @@ ReactDOM.render(
           <Route exact path="/updateProfile" component={UpdateProfile}>
           </Route>
           <Route exact path="/savedFacts" component={SavedFacts}>
+          </Route>
+          <Route exact path="/signUp" component={signUp}>
           </Route>
         </Switch>
       </BrowserRouter>,

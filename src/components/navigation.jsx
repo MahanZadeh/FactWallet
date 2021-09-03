@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom';
 
 import logo192 from './logo192.png';
 
+import { logout } from '../firebase/firebase';
+
+import { handleLogout } from '../firebase/firebase'
+
 class Navigation extends PureComponent {
     constructor(props) {
         super(props);
@@ -59,8 +63,11 @@ class Navigation extends PureComponent {
                                 <Link to="/savedFacts" className="nav-link">
                                     My saved facts!
                                 </Link>
-                                <Link onClick={this.renderLogin} to="#" className="nav-link">
+                                <Link  to="/login" className="nav-link">
                                     Login
+                                </Link>
+                                <Link onClick={logout} to="#" className="nav-link">
+                                    Logout
                                 </Link>
                             </Nav>
                         </Navbar.Collapse>

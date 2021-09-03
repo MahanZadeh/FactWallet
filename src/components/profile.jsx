@@ -35,6 +35,7 @@ class Profile extends PureComponent {
             pic: "",
             address: "",
             ShowpdateProfile: false,
+            test: false,
         };
         this.hideComponent = this.hideComponent.bind(this);
 
@@ -51,6 +52,12 @@ class Profile extends PureComponent {
     hideComponent = () => {
         this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
         
+    }
+
+    testToggle = () => {
+        this.setState({
+            test: !this.state.test,
+        })
     }
 
     populateUser = () => {
@@ -118,6 +125,8 @@ class Profile extends PureComponent {
 
                 <>
                     <Navigation />
+                    <button onClick={this.hideComponent}></button>
+                    {this.state.test ? <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} /> : <p>Bye</p>}
                     <Card bg="secondary" text="white" style={{ width: '100%', height: '85vh' }}>
                         <Card.Header>
                             <div id="profilPic" style={{ position: 'relative', }}>
