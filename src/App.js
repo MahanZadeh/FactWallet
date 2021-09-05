@@ -35,7 +35,6 @@ function SignOut() {
 function App() {
 
   const [user] = useAuthState(auth);
-  console.log(user)
 
   return (
     <div className="App">

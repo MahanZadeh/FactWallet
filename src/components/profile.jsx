@@ -70,15 +70,11 @@ class Profile extends PureComponent {
     populateUser = () => {
         onAuthStateChanged(auth, (somebody) => {
             if (somebody) {
-                console.log(somebody)
-                console.log(somebody.uid)
-                console.log(somebody.displayName)
 
                 db.collection("users")
                     .doc(somebody.uid)
                     .get()
                     .then((result) => {
-                        console.log(somebody.email)
                         this.setState({
                             name: somebody.displayName,
                             email: somebody.email,
@@ -104,7 +100,6 @@ class Profile extends PureComponent {
     retrieveUserInfo = () => {
         let userInfo = [];
         let user = auth.currentUser;
-        console.log("userinfo fired")
         if (user !== null) {
             user.providerData.forEach((profile) => {
                 userInfo.push(profile.providerId)
@@ -113,14 +108,13 @@ class Profile extends PureComponent {
                 userInfo.push(profile.email)
                 userInfo.push(profile.photoURL)
 
-                console.log("Sign-in provider: " + profile.providerId);
-                console.log("  Provider-specific UID: " + profile.uid);
-                console.log("  Name: " + profile.displayName);
-                console.log("  Email: " + profile.email);
-                console.log("  Photo URL: " + profile.photoURL);
+                // console.log("Sign-in provider: " + profile.providerId);
+                // console.log("  Provider-specific UID: " + profile.uid);
+                // console.log("  Name: " + profile.displayName);
+                // console.log("  Email: " + profile.email);
+                // console.log("  Photo URL: " + profile.photoURL);
             });
         }
-        console.log(userInfo)
         return userInfo;
         // this.setState({
 

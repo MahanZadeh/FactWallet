@@ -11,6 +11,7 @@ import logo192 from './logo192.png';
 import fw from './apple-touch-icon.png'
 
 import { logout } from '../firebase/firebase';
+import firebase from 'firebase/compat/app';
 
 import { handleLogout } from '../firebase/firebase'
 
@@ -57,9 +58,11 @@ class Navigation extends PureComponent {
                                 <Link to="/fact" className="nav-link">
                                     Random facts!
                                 </Link>
+                                {firebase.auth().currentUser ? 
                                 <Link to="/savedFacts" className="nav-link">
                                     My saved facts!
-                                </Link>
+                                </Link> : null }
+
                                 <Link  to="/login" className="nav-link">
                                     Login
                                 </Link>

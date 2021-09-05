@@ -53,6 +53,9 @@ import Register from './components/register';
 import Reset from './components/reset';
 import Dashboard from './components/dashboard';
 
+import firebase from 'firebase/compat/app';
+import { auth } from '../src/firebase/firebase';
+
 ReactDOM.render( 
       <BrowserRouter>
         <Switch>
@@ -71,8 +74,12 @@ ReactDOM.render(
           </Route>
           <Route exact path="/updateProfile" component={UpdateProfile}>
           </Route>
+          
+          {/* {firebase.auth().currentUser?            */}
           <Route exact path="/savedFacts" component={SavedFacts}>
-          </Route>
+          </Route> 
+          {/*   : null } */}
+
           <Route exact path="/signUp" component={signUp}>
           </Route>
         </Switch>

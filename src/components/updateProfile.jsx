@@ -63,7 +63,6 @@ class UpdateProfile extends PureComponent {
             displayName: this.state.name,
         }).then(() => {
 
-            console.log("name updated")
         }).catch((error) => {
             console.log("Error updating name: ", error)
         });

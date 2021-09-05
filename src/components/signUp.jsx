@@ -61,7 +61,6 @@ class SignUp extends PureComponent {
 
     render(){
         const showSignUp = this.props.showSignUp;
-        console.log(showSignUp)
 
         return(
             <>
