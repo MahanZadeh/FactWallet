@@ -1,12 +1,6 @@
 import { React, PureComponent } from 'react';
 import {
-    Container,
-    Navbar,
-    Nav,
     Card,
-    Form,
-    Button,
-    NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Navigation from './navigation';
@@ -18,10 +12,9 @@ import Login from './login';
 
 
 import { onAuthStateChanged } from '@firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
+
+import { auth, db } from "../firebase/firebase";
 
 //profile component needs access to all the user's profile info. 
 
@@ -41,14 +34,6 @@ class Profile extends PureComponent {
         this.hideComponent = this.hideComponent.bind(this);
 
     }
-
-    // hideComponent(name) {
-    //     console.log(name);
-    //     switch (name) {
-    //         case "ShowpdateProfile":
-    //             this.setState({ ShowpdateProfile: !this.state.ShowpdateProfile });
-    //     }
-    // }
 
     rerender = () => {
         this.setState({
@@ -97,29 +82,6 @@ class Profile extends PureComponent {
     }
 
 
-    retrieveUserInfo = () => {
-        let userInfo = [];
-        let user = auth.currentUser;
-        if (user !== null) {
-            user.providerData.forEach((profile) => {
-                userInfo.push(profile.providerId)
-                userInfo.push(profile.uid)
-                userInfo.push(profile.displayName)
-                userInfo.push(profile.email)
-                userInfo.push(profile.photoURL)
-
-                // console.log("Sign-in provider: " + profile.providerId);
-                // console.log("  Provider-specific UID: " + profile.uid);
-                // console.log("  Name: " + profile.displayName);
-                // console.log("  Email: " + profile.email);
-                // console.log("  Photo URL: " + profile.photoURL);
-            });
-        }
-        return userInfo;
-        // this.setState({
-
-        // })
-    }
 
     render() {
 
@@ -150,60 +112,54 @@ class Profile extends PureComponent {
         }
 
         if (user) {
-            if (this.state.email != ""){
-            return (
-                <>
-                    {/* <button onClick={this.populateUser}></button> */}
-
-                    <Navigation />
-                    {/* <button onClick={this.hideComponent}></button>
-                    {this.state.test ? <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} /> : <p>Bye</p>} */}
-                    <Card text="white" style={{ width: '100%', height: '100vh', backgroundColor: "#8A9EAB" }}>
-                        <Card.Header>
-                            <div id="profilPic" style={{ position: 'relative', }}>
-                                <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", }}>
-                                </img>
-                                <p style={{ display: 'inline', color: '#2C353C', position: 'absolute', bottom: '0', left: '110px', fontSize: '3vh', }}>{this.state.name}</p>
-
-                            </div>
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Text>
-                                <div id="userDetails">
-                                    <p>
-                                        Email: {this.state.email}
-                                    </p>
+            if (this.state.email != "") {
+                return (
+                    <>
+                        <Navigation />
+                        <Card text="white" style={{ width: '100%', height: '100vh', backgroundColor: "#8A9EAB" }}>
+                            <Card.Header>
+                                <div id="profilPic" style={{ position: 'relative', }}>
+                                    <img src={this.state.pic} width="80vw" height="80vh" style={{ borderRadius: "50%", }}>
+                                    </img>
+                                    <p style={{ display: 'inline', color: '#2C353C', position: 'absolute', bottom: '0', left: '110px', fontSize: '3vh', }}>{this.state.name}</p>
 
                                 </div>
-
-                                {/* <Link to="/updateProfile" className="nav-link" style={{color:"black"}}>
-                        Update Profile
-                        </Link> */}
-                                <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{ color: "black", backgroundColor: "#576B77", }}>
-                                    Update Profile
-                                </Link>
+                            </Card.Header>
+                            <Card.Body>
                                 <div>
-                                    <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} populateUser={this.populateUser} />
+                                    <div id="userDetails">
+                                        <p>
+                                            Email: {this.state.email}
+                                        </p>
+
+                                    </div>
+                                    <Link onClick={() => this.hideComponent("ShowpdateProfile")} to="#" className="nav-link" style={{ color: "black", backgroundColor: "#576B77", }}>
+                                        Update Profile
+                                    </Link>
+                                    <div>
+                                        <UpdateProfile showSignUp={this.state.ShowpdateProfile} hideComponent={this.hideComponent} populateUser={this.populateUser} />
+                                    </div>
+
                                 </div>
+                            </Card.Body>
+                        </Card>
+                        <br />
+                    </>
 
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <br />
-                </>
-
-            )} else {
-                return(
+                )
+            } else {
+                return (
                     <div style={bufferDiv}>
-                    <img src={buffer} style={bufferImage}></img>
-                </div>
+                        <img src={buffer} style={bufferImage}></img>
+                    </div>
                 )
             }
         } else {
             return (
                 <>
-                    <p style={{display:"block", textAlign:"center", fontSize:"3vh",}}>Login to view your profile</p>
-                    <Login/>
+                    <Navigation />
+                    <p style={{ display: "block", textAlign: "center", fontSize: "3vh", }}>Login to view your profile</p>
+                    <Login />
                 </>
             )
         }
@@ -211,61 +167,3 @@ class Profile extends PureComponent {
 
 }
 export default Profile;
-
-
-///Set a user's email address/////////////////////////////////////
-
-// import { getAuth, updateEmail } from "firebase/auth";
-// const auth = getAuth();
-// updateEmail(auth.currentUser, "user@example.com").then(() => {
-//   // Email updated!
-//   // ...
-// }).catch((error) => {
-//   // An error occurred
-//   // ...
-// });
-
-
-
-
-// /**
-//  * Upload user profile image to Cloud Firestore.//////////////////////////////////////////////////
-//  * 
-//  * @param {string} userUid A string representing a corresponding firebase collection identification number (or a user)
-//  * @returns if an error occurs, function returns an error message of 'not logged in' 
-//  */
-//  function uploadUserProfilePic(userUid) {
-
-//     // Let's assume my storage is only enabled for authenticated users 
-//     // This is set in your firebase console storage "rules" tab
-//     if (!userUid) { console.err("Not logged in!"); return };
-
-//     const fileInput = document.getElementById("profile-pic");
-
-//     // listen for file selection
-//     fileInput.addEventListener('change', function (e) {
-
-//         var file = e.target.files[0];
-
-//         //store using this name
-//         var storageRef = storage.ref("images/" + userUid + ".jpg");
-
-//         //upload the picked file
-//         storageRef.put(file)
-//             .then(function () {
-//                 console.log('Uploaded to Cloud Storage.');
-//             })
-
-//         //get the URL of stored file
-//         storageRef.getDownloadURL()
-//             .then(function (url) {   // Get URL of the uploaded file
-//                 console.log(url);    // Save the URL into users collection
-//                 db.collection("users").doc(userUid).update({
-//                     "profilePicture": url
-//                 })
-//                     .then(function () {
-//                         console.log('Added Profile Pic URL to Firestore.');
-//                     })
-//             })
-//     })
-// }

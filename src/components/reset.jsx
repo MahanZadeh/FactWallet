@@ -4,15 +4,20 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { auth, sendPasswordResetEmail } from "../firebase/firebase";
 import "../styles/reset.css";
+
+import Navigation from "./navigation";
+
 function Reset() {
   const [email, setEmail] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const history = useHistory();
   useEffect(() => {
     if (loading) return;
-    if (user) history.replace("/dashboard");
+    if (user) history.replace("/fact");
   }, [user, loading]);
   return (
+    <>
+    <Navigation />
     <div className="reset">
       <div className="reset__container">
         <input
@@ -33,6 +38,7 @@ function Reset() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default Reset;

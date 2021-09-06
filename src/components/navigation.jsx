@@ -3,31 +3,31 @@ import {
     Container,
     Navbar,
     Nav,
-    NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import logo192 from './logo192.png';
 import fw from './apple-touch-icon.png'
 
 import { logout } from '../firebase/firebase';
 import firebase from 'firebase/compat/app';
 
-import { handleLogout } from '../firebase/firebase'
 
 class Navigation extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            showFactsPage: false
+            showFactsPage: false,
+            hideNavItems: false,
         };
     }
 
 
-    // renderFactsPage = (e) => {
-    //     e.preventDefault();
-    //     this.props.renderFactsPage;
-    // }
+
+    hideNavItems = (e) => {
+        this.setState({
+            hideNavItems: !this.state.hideNavItems
+        })
+    }
 
     renderLogin = (event) => {
         event.preventDefault();
@@ -66,7 +66,7 @@ class Navigation extends PureComponent {
                                 <Link  to="/login" className="nav-link">
                                     Login
                                 </Link>
-                                <Link onClick={() => {logout(); alert("You are logged out.")}} to="/fact" className="nav-link">
+                                <Link onClick={() => {logout(); alert("You are logged out."); this.hideNavItems()}} to="/fact" className="nav-link">
                                     Logout
                                 </Link>
                             </Nav>

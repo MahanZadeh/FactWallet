@@ -1,21 +1,16 @@
 import React, { PureComponent } from 'react';
-import { Modal, Button, Form, Card, Nav } from 'react-bootstrap';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { onAuthStateChanged } from '@firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { arrayRemove } from "firebase/firestore";
 import firebase from 'firebase/compat/app';
 
-import { auth, signInWithEmailAndPassword, signInWithGoogle, db, } from "../firebase/firebase";
+import { auth, db, } from "../firebase/firebase";
 
 import Navigation from './navigation';
-
-import { collection, query, where } from "firebase/firestore";
-import Fact from './facts';
 import buffer from './buffer.gif';
+import FactItem from './fact/Fact';
 
 
 
@@ -26,11 +21,12 @@ class SavedFacts extends PureComponent {
             facts: [],
             uid: "",
             delete: "",
+            loading: true,
         };
     }
 
 
-    componentDidMount() {
+    async UNSAFE_componentWillMount() {
         onAuthStateChanged(auth, (user) => {
             let allFacts = [];
             if (user) {
@@ -44,10 +40,13 @@ class SavedFacts extends PureComponent {
                         return allFacts;
                     }).then((allFacts) => {
                         this.setState({
-                            facts: allFacts,
+                            facts: allFacts[0],
                             uid: user.uid,
                         })
-                       
+                        this.setState({
+                            loading: false,
+                        })
+
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -58,70 +57,51 @@ class SavedFacts extends PureComponent {
     }
 
     //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
+    //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
     deleteFact = (e) => {
-        console.log(e);
         this.removeFromDB(e);
-        this.componentDidMount();
-        this.getFacts();
+        this.updateState(e);
     }
 
+    // updateState = (e) => {
+    //     console.log("should set state")
+    //     this.setState({facts: this.state.facts.filter(function(facts) { 
+    //         return facts !== e
+    //     })});
+    //     console.log(this.state.facts)
+    // }
+
+
+    // updateState = (e) => {
+    //    //copy  
+    //     let array = [ ...this.state.facts];
+    //     //index shoud be value
+    //     let index = e
+    //     // console.log(index, " index")
+    //     if (index >= 0){
+
+    //         array.splice(index, 1);
+    //         this.setState({facts: array});
+    //      }
+    // }
+
+    updateState = (e) => {
+        this.setState({
+            facts: this.state.facts.filter(function (facts) {
+                return facts !== e
+            })
+        });
+    }
     removeFromDB = (e) => {
         let user = firebase.auth().currentUser;
         if (user) {
             db.collection("savedFacts")
-            .doc(user.uid)
-            .update({
-                fact: arrayRemove(e)
-            })
+                .doc(user.uid)
+                .update({
+                    fact: arrayRemove(e)
+                })
         }
     }
-
-        //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
-        // deleteFact = (e) => {
-        //     console.log("render")
-            // onAuthStateChanged(auth, (user) => {
-            //     if (user) {
-            //         console.log(user.uid)
-            //     db.collection("savedFacts").doc(user.uid).set({
-            //       fact: this.state.facts[0],
-            //       uid: user.uid,
-            //     }, { merge: true })
-            //     .then((docRef) => {
-            //     //   alert("Data Successfully Deleted");
-            //     //   console.log(this.state.facts[0])
-            //       console.log("Data Successfully Deleted")
-            //     })
-            //             .catch(function (error) {
-            //                 console.log(error)
-            //             })
-    
-            //     }
-            // })
-            // console.log(item)
-// }
-
-
-    getFacts = (e) => {
-        let allFacts = [];
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-
-        db.collection("savedFacts").doc(user.uid).get()
-        .then(function (doc) {
-            let test = doc.data();
-        })
-          .catch((error) => {
-            console.error("Error adding document: ", error);
-          })
-        } 
-    
-        else {
-            alert("You need to be signed in to perfom this operation!")
-          }
-        })
-        }
-
 
 
 
@@ -133,7 +113,7 @@ class SavedFacts extends PureComponent {
             margin: "0 auto",
             zIndex: "100",
         }
-      
+
         const bufferDiv = {
             position: "fixed",
             display: "block",
@@ -149,29 +129,39 @@ class SavedFacts extends PureComponent {
 
         const facts = this.state.facts;
         const deleteText = "";
-        console.log(facts, "here")
-        if (this.state.facts.length != "0") {
-            return (
-                <>
-                    <Navigation />
-                    {facts[0].map((fact,i) => (
-                        
-                        <>
-                            <div className="facts" key={i} style={{ width: "100%", display: "inline-block", textAlign: "center", marginBottom: "10px", boxShadow: "10px 5px 5px #3A4750", textAlign:"left"}}>
-                                {fact}
-                                <button style={{float: "right", height: "3vh", width:"5vh", fontSize:"10px", backgroundColor:"#495964", marginRight:"1vw"}} onClick={() => this.deleteFact(fact)}>Delete</button>
+        if (!this.state.loading) {
+            if (this.state.facts.length == 0) {
+                return (
+                    <>
+                        <Navigation />
 
-                            </div>
-                        </>
-                    ))}
-                </>
-            )
+                        <div>You have no saved Facts!</div>
+                    </>
+                )
+            } else {
+
+                return (
+                    <>
+                        <Navigation />
+                        {facts.map((fact, i) => (
+
+                            <>
+                              <FactItem
+                                key={i}
+                                fact={fact}
+                                deleteFact={this.deleteFact}
+                              />
+                            </>
+                        ))}
+                    </>
+                )
+            }
         } else {
             return (
                 <div style={bufferDiv}>
-                  <img src={buffer} style={bufferImage}></img>
+                    <img src={buffer} style={bufferImage}></img>
                 </div>
-              )
+            )
         }
     }
 }

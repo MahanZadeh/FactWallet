@@ -80,26 +80,6 @@ const logout = () => {
 
 };
 
-const retrieveUserInfo = () => {
-        let userInfo = [];
-        if (user !== null) {
-                user.providerData.forEach((profile) => {
-                        userInfo.push(profile.providerId)
-                        userInfo.push(profile.uid)
-                        userInfo.push(profile.displayName)
-                        userInfo.push(profile.email)
-                        userInfo.push(profile.photoURL)
-
-                        // console.log("Sign-in provider: " + profile.providerId);
-                        // console.log("  Provider-specific UID: " + profile.uid);
-                        // console.log("  Name: " + profile.displayName);
-                        // console.log("  Email: " + profile.email);
-                        // console.log("  Photo URL: " + profile.photoURL);
-                });
-        }
-        console.log(userInfo)
-        return userInfo;
-}
 
 export {
         auth,
@@ -109,21 +89,4 @@ export {
         registerWithEmailAndPassword,
         sendPasswordResetEmail,
         logout,
-        retrieveUserInfo,
 };
-
-
-// /**
-//  * Initialize Firebase.
-//  * 
-//  * This code was adapted from https://firebase.google.com/docs/web/setup
-//  *
-//  */
-// firebase.initializeApp(firebaseConfig);
-// const db = firebase.firestore();
-// const auth = firebase.auth();
-// const storage = firebase.storage();
-
-// db.settings({timestampInSnapshots: true});
-
-// export default db; auth; storage;

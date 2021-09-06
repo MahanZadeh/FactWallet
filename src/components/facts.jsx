@@ -1,19 +1,16 @@
 import React, { PureComponent } from 'react';
-import { Modal, Button, Form, Card, Nav } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { onAuthStateChanged } from '@firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import { auth, signInWithEmailAndPassword, signInWithGoogle, db } from "../firebase/firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
+import { arrayUnion } from "firebase/firestore";
 
 
 import Navigation from './navigation';
 
-import styled from 'styled-components';
 
 import buffer from './buffer.gif';
 
@@ -46,7 +43,6 @@ class Fact extends PureComponent {
             isLoaded: true,
             items: result[0]["fact"]
           });
-          console.log(result[0]["fact"])
         },
         (error) => {
           this.setState({
@@ -73,7 +69,6 @@ class Fact extends PureComponent {
             isLoaded: true,
             items: result[0]["fact"]
           });
-          console.log(result[0]["fact"])
         },
         (error) => {
           this.setState({
@@ -86,7 +81,6 @@ class Fact extends PureComponent {
   saveFact = (e) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.uid)
     db.collection("savedFacts").doc(user.uid).set({
       fact: arrayUnion(this.state.items),
       uid: user.uid,
@@ -116,11 +110,7 @@ class Fact extends PureComponent {
       height: "100vh",
       overflow: "hidden",
     };
-    const button = {
-      backgroundColor: "red",
-      padding: "15px",
-    };
-    
+
     const bufferImage = {
       position: "absolute",
       top: "50%",
@@ -137,7 +127,6 @@ class Fact extends PureComponent {
       top: "0",
       left: "0",
       textAlign: "center",
-      /* opacity: 0.7; */
       backgroundColor: "#fff",
       zIndex: "99",
   }
@@ -157,16 +146,14 @@ class Fact extends PureComponent {
       <>
       <Navigation />
         <div>
-          {/* <Card onClick={this.handleClick} style={mystyle}> */}
           <Card style={mystyle}>
             <Card.Body>
               <Card.Title style={{ color: '#1D2428' }}>Did you know?</Card.Title>
-              {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
               <Card.Text style={{fontSize: "3vh", color: "#1D2428"}}>
                 {items}
               </Card.Text>
-              <Card.Link href="#" onClick={this.handleClick} style={{color: "#1D2428",}}>Click here for a New Fact!</Card.Link>
-              <Card.Link href="#" onClick={this.saveFact} style={{color: "#1D2428",}}>Save it to your profile!</Card.Link>
+              <Card.Link href="#" onClick={(e) => {this.handleClick(e)}} style={{color: "#1D2428",}}>New fact!</Card.Link>
+              <Card.Link href="#" onClick={(e) => {this.saveFact(e)}} style={{color: "#1D2428",}}>Save this fact!</Card.Link>
             </Card.Body>
           </Card>        
         </div>
@@ -177,48 +164,3 @@ class Fact extends PureComponent {
 }
 
 export default Fact;
-
-    // const card = styled.a` 
-    //   transition: "box-shadow .3s",
-    //   width: "300px",
-    //   height: "500px",
-    //   margin: "50px",
-    //   borderRadius: "10px",
-    //   border: "1px solid #ccc",
-    //   background: "#fff",
-    //   float: "left",
-    //   "&:hover": {
-    //     backgroundColor: "blue",
-    //   }`;
-
-    const card = styled.div.attrs((/* props */) => ({ tabIndex: 0 }))`
-  color: blue;
-
-  &:hover {
-    color: red; // <Thing> when hovered
-  }
-
-  & ~ & {
-    background: tomato; // <Thing> as a sibling of <Thing>, but maybe not directly next to it
-  }
-
-  & + & {
-    background: lime; // <Thing> next to <Thing>
-  }
-
-  &.something {
-    background: orange; // <Thing> tagged with an additional CSS class ".something"
-  }
-
-  .something-else & {
-    border: 1px solid; // <Thing> inside another element labeled ".something-else"
-  }
-`
-    
-
-
-
-{/* <ul style={mystyle}>
-<li>{items}</li>
-<Button style={button} onClick={this.handleClick}></Button>
-</ul> */}

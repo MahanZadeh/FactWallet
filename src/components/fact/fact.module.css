@@ -1,0 +1,17 @@
+.fact {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 10px;
+    box-shadow: 10px 5px 5px #3A4750;
+    text-align: left;
+}
+
+.button {
+    float: right;
+    height: 3vh;
+    width: 5vh;
+    font-size: 10px;
+    background-color: #495964;
+    margin-right: 1vw;
+}
