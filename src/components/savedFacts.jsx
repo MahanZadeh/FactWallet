@@ -26,7 +26,7 @@ class SavedFacts extends PureComponent {
     }
 
 
-    async UNSAFE_componentWillMount() {
+    componentWillMount() {
         onAuthStateChanged(auth, (user) => {
             let allFacts = [];
             if (user) {
@@ -39,13 +39,17 @@ class SavedFacts extends PureComponent {
                         })
                         return allFacts;
                     }).then((allFacts) => {
+                        if (allFacts.length != 0) {
                         this.setState({
                             facts: allFacts[0],
                             uid: user.uid,
                         })
+                    }
                         this.setState({
                             loading: false,
                         })
+                    
+                        
 
                     })
                     .catch(function (error) {
@@ -128,9 +132,10 @@ class SavedFacts extends PureComponent {
         }
 
         const facts = this.state.facts;
+
         const deleteText = "";
         if (!this.state.loading) {
-            if (this.state.facts.length == 0) {
+            if (this.state.facts.length === 0) {
                 return (
                     <>
                         <Navigation />
