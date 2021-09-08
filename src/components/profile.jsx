@@ -16,7 +16,6 @@ import { onAuthStateChanged } from '@firebase/auth';
 
 import { auth, db } from "../firebase/firebase";
 
-//profile component needs access to all the user's profile info. 
 
 
 class Profile extends PureComponent {
@@ -106,7 +105,6 @@ class Profile extends PureComponent {
             top: "0",
             left: "0",
             textAlign: "center",
-            /* opacity: 0.7; */
             backgroundColor: "#fff",
             zIndex: "99",
         }

@@ -60,34 +60,10 @@ class SavedFacts extends PureComponent {
         })
     }
 
-    //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
-    //FIRST DROP THE DUPLICATES IN THE SAVE PART, THEN FIND A WAY TO DELETE THEM HERE 
     deleteFact = (e) => {
         this.removeFromDB(e);
         this.updateState(e);
     }
-
-    // updateState = (e) => {
-    //     console.log("should set state")
-    //     this.setState({facts: this.state.facts.filter(function(facts) { 
-    //         return facts !== e
-    //     })});
-    //     console.log(this.state.facts)
-    // }
-
-
-    // updateState = (e) => {
-    //    //copy  
-    //     let array = [ ...this.state.facts];
-    //     //index shoud be value
-    //     let index = e
-    //     // console.log(index, " index")
-    //     if (index >= 0){
-
-    //         array.splice(index, 1);
-    //         this.setState({facts: array});
-    //      }
-    // }
 
     updateState = (e) => {
         this.setState({
@@ -108,7 +84,6 @@ class SavedFacts extends PureComponent {
     }
 
 
-
     render() {
         const bufferImage = {
             position: "absolute",
@@ -126,7 +101,6 @@ class SavedFacts extends PureComponent {
             top: "0",
             left: "0",
             textAlign: "center",
-            /* opacity: 0.7; */
             backgroundColor: "#fff",
             zIndex: "99",
         }

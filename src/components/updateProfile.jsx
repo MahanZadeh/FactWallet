@@ -28,7 +28,6 @@ class UpdateProfile extends PureComponent {
 
     populateUser = () => {
         onAuthStateChanged(auth, (somebody) => {
-            // console.log(auth.currentUser())
             if (somebody) {
 
                 db.collection("users")
@@ -42,7 +41,6 @@ class UpdateProfile extends PureComponent {
                         this.setState({
                             name: somebody.displayName,
                             email: somebody.email,
-                            // pic: somebody.photoURL,
                         })
                     }).catch(function (error) {
                         console.log(error)
@@ -80,7 +78,6 @@ class UpdateProfile extends PureComponent {
 
 
     updateEmailDb = () => {
-        // if(this.state.email.length )
         updateEmail(auth.currentUser, this.state.email).then(() => {
             alert("Email updated")
         }).catch((error) => {

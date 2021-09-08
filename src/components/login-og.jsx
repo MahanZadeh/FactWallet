@@ -71,14 +71,6 @@ showSignUpform = (e) => {
         <div>
           Don't have an account? <Link to="/register">Register</Link> now.
         </div>
-          {/* <div>
-            <Link to="/reset">Forgot Password</Link>
-          </div> */}
-          {/* <div>
-            Don't have an account? <Link to="#" onClick={this.showSignUpform}>Register</Link> now.
-          </div>
-          {this.state.showSignUpform ? <SignUp/> : <p></p>} */}
-          
         </div>
       </div>
     );
