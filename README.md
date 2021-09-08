@@ -8,11 +8,6 @@ Built with React and Firebase.
 
 ## Getting Started
 
-### Dependencies
-
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
 ### Hosted Website
 
 [https://factswallet-bbf90.web.app/](https://factswallet-bbf90.web.app/)
