@@ -79,6 +79,7 @@ class Fact extends PureComponent {
       )  }
 
   saveFact = (e) => {
+    e.preventDefault();
     onAuthStateChanged(auth, (user) => {
       if (user) {
     db.collection("savedFacts").doc(user.uid).set({

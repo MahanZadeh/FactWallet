@@ -108,11 +108,12 @@ class UpdateProfile extends PureComponent {
                 alert("Error updating password: ", error)
             });
         } else {
-            alert("Failed to update password. Password needs to be at least 6 charachters long")
+            alert("Failed to update password. Password needs to be at least 6 characters long")
         }
     }
 
     updateDB = (e) => {
+        e.preventDefault();
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 try {
@@ -170,7 +171,7 @@ class UpdateProfile extends PureComponent {
 
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={() => { this.props.hideComponent(); this.updateDB(); this.props.populateUser() }} variant="secondary">Submit</Button>
+                            <Button onClick={(e) => { this.props.hideComponent(); this.updateDB(e); this.props.populateUser() }} variant="secondary">Submit</Button>
                             <Button onClick={this.props.hideComponent} variant="secondary">Cancel</Button>
                         </Modal.Footer>
                     </Modal>
