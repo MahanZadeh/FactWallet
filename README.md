@@ -8,10 +8,6 @@ Built with React and Firebase.
 
 ## Getting Started
 
-### Hosted Website
-
-[https://factswallet-bbf90.web.app/](https://factswallet-bbf90.web.app/)
-
 ### Executing program
 
 npm start
