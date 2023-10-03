@@ -1,6 +1,6 @@
  # FactWallet
 
-An app that fetches a random fact and allows the authenticated user to save it to your profile. 
+An app that fetches a random fact and allows the authenticated user to save it to their profile. 
 
 ## Description
 
